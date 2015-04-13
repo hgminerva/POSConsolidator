@@ -1,0 +1,165 @@
+﻿
+@{
+    ViewBag.Title = "Sales";
+}
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+
+<script src="/wijmo/controls/wijmo.min.js" type="text/javascript"></script>
+<script src="/wijmo/controls/wijmo.input.min.js"></script>
+<script src="/wijmo/controls/wijmo.grid.min.js" type="text/javascript"></script>
+<script src="/wijmo/controls/wijmo.chart.min.js"></script>
+<link href="/wijmo/styles/wijmo.min.css" rel="stylesheet" />
+<link href="/wijmo/styles/themes/wijmo.theme.grayscale.min.css" rel="stylesheet" />
+
+<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                <i class="fa fa-bars"></i>
+            </button>
+            <a class="navbar-brand page-scroll" href="/">
+                <i class="fa fa-play-circle"></i>  <span class="light">Innosoft</span> Web POS
+            </a>
+        </div>
+        <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a class="page-scroll" href="/POS">Dashboard</a>
+                </li>
+                <li>
+                    <a class="page-scroll" href="/POS/Sales">Sales</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section id="grid" class="container content-section-pos text-center">
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="POSGrid" class="grid"><i class="fa fa-spinner fa-spin"></i></div>
+        </div>
+    </div>
+</section>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var SalesData = new wijmo.collections.ObservableArray();
+
+        $.ajax({
+            url: '/api/TrnSales',
+            cache: false,
+            type: 'GET',
+            contentType: 'application/json; charset=utf-8',
+            data: {},
+            success: function (Results) {
+                if (Results.length > 0) {
+                    // Remove spinner
+                    $("#POSGrid").empty();
+
+                    // Get Data
+                    for (i = 0; i < Results.length; i++) {
+                        SalesData.push({
+                            User: "Innosoft",
+                            Id: Results[i]["Id"],
+                            SalesDate: Results[i]["SalesDate"],
+                            SalesNumber: Results[i]["SalesNumber"],
+                            ORNumber: Results[i]["ORNumber"],
+                            Amount: Results[i]["Amount"],
+                            VATSales: Results[i]["VATSales"],
+                            NonVATSale: Results[i]["NonVATSale"],
+                            VATAmount: Results[i]["VATAmount"]
+                        });
+                    }
+
+                    // Create collection view
+                    var Sales = new wijmo.collections.CollectionView(SalesData);
+
+                    Sales.pageSize = 15;
+
+                    // Create grid
+                    var SalesGrid = new wijmo.grid.FlexGrid('#POSGrid');
+
+                    SalesGrid.initialize({
+                        columns: [
+                                    {
+                                        "header": "Tenant",
+                                        "binding": "User",
+                                        "width": 100,
+                                        "allowSorting": false,
+                                        "isContentHtml": true
+                                    },
+                                    {
+                                        "header": "Date",
+                                        "binding": "SalesDate",
+                                        "width": 100,
+                                        "allowSorting": false,
+                                        "isContentHtml": true
+                                    },
+                                    {
+                                        "header": "OR No.",
+                                        "binding": "ORNumber",
+                                        "allowSorting": false,
+                                        "width": '2*'
+                                    },
+                                    {
+                                        "header": "SI No.",
+                                        "binding": "SalesNumber",
+                                        "allowSorting": false,
+                                        "width": '2*'
+                                    },
+                                    {
+                                        "header": "Amount",
+                                        "binding": "Amount",
+                                        "allowSorting": false,
+                                        "width": 100
+                                    },
+                                    {
+                                        "header": "VAT Sales",
+                                        "binding": "VATSales",
+                                        "allowSorting": false,
+                                        "width": 100
+                                    },
+                                    {
+                                        "header": "Non-VAT Sales",
+                                        "binding": "NonVATSale",
+                                        "allowSorting": false,
+                                        "width": 100
+                                    },
+                                    {
+                                        "header": "VAT Amount",
+                                        "binding": "VATAmount",
+                                        "allowSorting": false,
+                                        "width": 100
+                                    }
+                        ],
+                        autoGenerateColumns: false,
+                        itemsSource: Sales,
+                        isReadOnly: true,
+                        selectionMode: wijmo.grid.SelectionMode.Row
+
+                    });
+
+                    SalesGrid.trackChanges = true;
+
+                } else {
+                    alert("No data.");
+                }
+            }
+        }).fail(
+            function (xhr, textStatus, err) {
+                alert(err);
+            }
+        );
+
+    });
+</script>
+
+<!-- Display -->
+@*<script src="/js/jquery.js"></script>*@
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/jquery.easing.min.js"></script>
+<script src="/js/grayscale.js"></script>
+
