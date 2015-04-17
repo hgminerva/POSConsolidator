@@ -54,7 +54,10 @@
                     @if (Request.IsAuthenticated)
                     {
                         <li>
-                            <strong>@Html.Encode(User.Identity.Name)</strong> - @Html.ActionLink("Sign Out", "Logout", "User")
+                            <a style="pointer-events:none"><strong>@Html.Encode(User.Identity.Name)</strong></a>
+                        </li>
+                        <li> 
+                            @Html.ActionLink("Sign Out", "Logout", "User")
                         </li>   
                     } else {
                         <li>
