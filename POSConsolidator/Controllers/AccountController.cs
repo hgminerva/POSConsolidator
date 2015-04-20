@@ -50,7 +50,6 @@ namespace POSConsolidator.Controllers
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
-                    Response.Write("<script>alert('Login Successful.');</script>");
                     return RedirectToLocal(returnUrl);
                 }
                 else
@@ -70,7 +69,6 @@ namespace POSConsolidator.Controllers
         public ActionResult Logout() 
         {
             AuthenticationManager.SignOut();
-            Response.Write("<script>alert('Logout Successful.');</script>");
             return RedirectToAction("Index", "Home");
         }
 
