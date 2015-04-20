@@ -13,16 +13,14 @@
                 <br /><br /><br /><br />
                 <h2 align="center">@ViewBag.Title.</h2>
                 <h4 align="center">Use a local account to log in.</h4>
-                @Html.ValidationSummary(true)
+                @Html.ValidationSummary(true, "Login Failed. Account/Password is Incorrect.")
                 <div align="center" class="form-group">
-                    @*@Html.LabelFor(m => m.UserName, new { @class = "col-md-5 control-label" })*@
                     <div align="center" class="col-md-offset-4 col-md-4">
                         @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username" })
                         @Html.ValidationMessageFor(m => m.UserName)
                     </div>
                 </div>
                 <div align="center" class="form-group">
-                    @*@Html.LabelFor(m => m.Password, new { @class = "col-md-5 control-label" })*@
                     <div align="center" class="col-md-offset-4 col-md-4">
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password",
                        @Autocomplete = "off" })

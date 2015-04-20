@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -49,6 +50,7 @@ namespace POSConsolidator.Controllers
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
+                    Response.Write("<script>alert('Login Successful.');</script>");
                     return RedirectToLocal(returnUrl);
                 }
                 else
@@ -59,6 +61,17 @@ namespace POSConsolidator.Controllers
 
             // If we got this far, something failed, redisplay form
             return View(model);
+        }
+
+
+        // POST: /Account/Logout
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Logout() 
+        {
+            AuthenticationManager.SignOut();
+            Response.Write("<script>alert('Logout Successful.');</script>");
+            return RedirectToAction("Index", "Home");
         }
 
         //
