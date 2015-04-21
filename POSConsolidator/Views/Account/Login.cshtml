@@ -4,36 +4,6 @@
     ViewBag.Title = "Log in";
 }
 
-<!-- Navigation -->
-<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
-    <div class="container">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
-                <i class="fa fa-bars"></i>
-            </button>
-            <a class="navbar-brand page-scroll" href="#page-top">
-                <i class="fa fa-play-circle"></i>  <span class="light">Innosoft</span> Web POS
-            </a>
-        </div>
-        <div class="collapse navbar-collapse navbar-right navbar-main-collapse">
-            <ul class="nav navbar-nav">
-                <li class="hidden">
-                    <a href="#page-top"></a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="/Home/Index#about">About</a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="/Home/Index#download">POS</a>
-                </li>
-                <li>
-                    <a class="page-scroll" href="/Home/Index#contact">Contact</a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-
 <div class="row">
     <div class="container">
         <section id="loginForm">
@@ -43,16 +13,14 @@
                 <br /><br /><br /><br />
                 <h2 align="center">@ViewBag.Title.</h2>
                 <h4 align="center">Use a local account to log in.</h4>
-                @Html.ValidationSummary(true)
+                @Html.ValidationSummary(true, "Login Failed. Account/Password is Incorrect.")
                 <div align="center" class="form-group">
-                    @*@Html.LabelFor(m => m.UserName, new { @class = "col-md-5 control-label" })*@
                     <div align="center" class="col-md-offset-4 col-md-4">
                         @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", @placeholder = "Username" })
                         @Html.ValidationMessageFor(m => m.UserName)
                     </div>
                 </div>
                 <div align="center" class="form-group">
-                    @*@Html.LabelFor(m => m.Password, new { @class = "col-md-5 control-label" })*@
                     <div align="center" class="col-md-offset-4 col-md-4">
                         @Html.PasswordFor(m => m.Password, new { @class = "form-control", @placeholder = "Password",
                        @Autocomplete = "off" })
