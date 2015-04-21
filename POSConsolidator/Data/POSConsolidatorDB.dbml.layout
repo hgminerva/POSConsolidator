@@ -8,5 +8,24 @@
         <elementListCompartment Id="0b06ea5f-ea88-4ec3-8d20-790ca7215931" absoluteBounds="1.5150000000000001, 1.71, 1.9700000000000002, 3.3262125651041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
+    <classShape Id="e123de6d-b619-4d61-ae42-db58e3244628" absoluteBounds="7.125, 0.875, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/POSConsolidatorDBDataContext/MstBranch" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ee5d8255-848a-42c1-99e8-c90fd1eb610f" absoluteBounds="7.14, 1.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="ef07d386-df06-4522-bd88-ebdd8191ab1f" absoluteBounds="4.375, 0.875, 2, 1.5785953776041666">
+      <DataClassMoniker Name="/POSConsolidatorDBDataContext/MstCompany" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ecf778f9-a909-4706-91c1-ea7894e21b86" absoluteBounds="4.39, 1.335, 1.9700000000000002, 1.0185953776041665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.375 : 1.66429768880208); (7.125 : 1.66429768880208)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/POSConsolidatorDBDataContext/MstCompany/MstCompany_MstBranch" />
+      <nodes>
+        <classShapeMoniker Id="ef07d386-df06-4522-bd88-ebdd8191ab1f" />
+        <classShapeMoniker Id="e123de6d-b619-4d61-ae42-db58e3244628" />
+      </nodes>
+    </associationConnector>
   </nestedChildShapes>
 </ordesignerObjectsDiagram>
