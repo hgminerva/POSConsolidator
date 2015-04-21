@@ -30,6 +30,9 @@
                 <li>
                     <a class="page-scroll" href="/Home/Index#contact">Contact</a>
                 </li>
+                <li>
+                    <a class="page-scroll" href="/Account/Login#loginform">Login</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -43,9 +46,11 @@
         <br /><br /><br />
         <h2 align="center">@ViewBag.Title</h2>
         <h5 align="center">Create a new account</h5>
+        <h6 align="center"><font color=RED>@Html.ValidationSummary(true, "That Username is taken/ Your password does not match." )</font></h6>
+        <h6 align="center"><font color=RED>@Html.ValidationSummary(true, "Password must have 6 or more characters.")</font></h6>
 
-        <h6 align="center">@Html.ValidationSummary()</h6>
-        @Html.LabelFor(m => m.UserName, new { @class = "col-md-5 control-label" })
+
+         @Html.LabelFor(m => m.UserName, new { @class = "col-md-5 control-label" }) 
         <div class="col-md-2">
             @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
         </div>
@@ -68,4 +73,7 @@
         </div>
     </div>
 }
+
+
+
 
