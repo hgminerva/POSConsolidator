@@ -54,7 +54,7 @@ namespace POSConsolidator.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "Invalid username or password.");
+                    ModelState.AddModelError("", "Invalid username or password.<strong>");
                 }
             }
 

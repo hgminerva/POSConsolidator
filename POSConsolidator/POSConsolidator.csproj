@@ -188,7 +188,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\TrnSales.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Samples\EventController.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -339,7 +338,6 @@
     <Content Include="less\variables.less" />
     <None Include="Properties\PublishProfiles\posconsolidator - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\posconsolidator - Web Deploy.pubxml" />
-    <Content Include="Samples\Event.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -380,6 +378,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Samples\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -410,7 +409,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53806</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
