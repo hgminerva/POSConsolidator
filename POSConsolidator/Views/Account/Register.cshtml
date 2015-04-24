@@ -25,15 +25,35 @@
                     <a class="page-scroll" href="/Home/Index#about">About</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="/Home/Index#download">POS</a>
-                </li>
-                <li>
                     <a class="page-scroll" href="/Home/Index#contact">Contact</a>
                 </li>
                 <li>
-                    <a class="page-scroll" href="/Account/Login#loginform">Login</a>
+                    <a class="page-scroll" href="/Home/Index#download">POS</a>
                 </li>
+                @if (Request.IsAuthenticated)
+                {
+                    <li>
+                        <a style="pointer-events:none"><strong>@Html.Encode(User.Identity.Name)</strong></a>
+                    </li>
+                    <li>
+                        @using (Html.BeginForm("Logout", "Account"))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input type="submit" class="btn btn-default" style="padding: 0; padding-top: 14.5px; border: none; background: none;" title="Log off" value="Sign Out" />
+                        }
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        @Html.ActionLink("Register", "Register", "Account")
+                    </li>
+                    <li>
+                        @Html.ActionLink("Sign In", "Login", "Account")
+                    </li>
+                }
             </ul>
+
         </div>
     </div>
 </nav>
