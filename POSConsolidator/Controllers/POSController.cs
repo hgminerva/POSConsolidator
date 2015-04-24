@@ -14,11 +14,13 @@ namespace POSConsolidator.Controllers
         {
             return View();
         }
+
         // GET: /POS/Sales
         [Authorize]
         public ActionResult Sales()
         {
             return View();
         }
+
 	}
 }
