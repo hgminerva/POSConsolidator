@@ -50,6 +50,7 @@ namespace POSConsolidator.Controllers
                 if (user != null)
                 {
                     await SignInAsync(user, model.RememberMe);
+                   
                     return RedirectToLocal(returnUrl);
                 }
                 else
