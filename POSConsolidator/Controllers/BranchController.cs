@@ -5,41 +5,40 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
-using POSConsolidator.Models;
 
 namespace POSConsolidator.Controllers
 {
-    public class EventController : ApiController //web api 2
+    public class BranchController : ApiController
     {
-        private posconsolidatorConnectionString db = new posconsolidatorConnectionString();
+        Data.POSConsolidatorDBDataContext xy = new Data.POSConsolidatorDBDataContext();
 
-        // GET                        
+        // GET api/Event                        
         [Authorize]
-        public List<Models.MstBranches> Get()
+        public List<Models.Branches> Get()
         {
             var retryCounter = 0;
-            List<Models.MstBranches> Sectors;
+            List<Models.Branches> values;
 
             while (true)
             {
                 try
                 {
-                    var Leaves = from d in db.MstBranch
-                                 orderby d.Id descending
-                                 select new Models.MstBranches
+                    var Leaves = from x in xy.MstBranches
+                                 orderby x.Id descending
+                                 select new Models.Branches
                                  {
-                                     Id = d.Id,
-                                     BranchCode = d.BranchCode,
-                                     Branch = d.Branch,
-                                     Companyid = d.Companyid,
+                                     Id = x.Id,
+                                     BranchCode = x.BranchCode,
+                                     Branch = x.Branch,
+                                     CompanyId = x.CompanyId,
                                  };
                     if (Leaves.Count() > 0)
                     {
-                        Sectors = Leaves.ToList();
+                        values = Leaves.ToList();
                     }
                     else
                     {
-                        Sectors = new List<Models.MstBranches>();
+                        values = new List<Models.Branches>();
                     }
                     break;
                 }
@@ -47,7 +46,7 @@ namespace POSConsolidator.Controllers
                 {
                     if (retryCounter == 3)
                     {
-                        Sectors = new List<Models.MstBranches>();
+                        values = new List<Models.Branches>();
                         break;
                     }
 
@@ -55,41 +54,92 @@ namespace POSConsolidator.Controllers
                     retryCounter++;
                 }
             }
-            return Sectors;
+            return values;
         }
 
         // POST api/AddEvent
         [Authorize]
         [Route("api/AddEvent")]
-        public int Post(Models.MstBranches Sectors)
+        public int Post(Models.Branches value)
         {
             try
             {
 
                 Data.MstBranch NewBranch = new Data.MstBranch();
 
-                SqlDateTime EventDate = new SqlDateTime(new DateTime(Convert.ToDateTime(value.EventDate).Year, +
-                                                                     Convert.ToDateTime(value.EventDate).Month, +
-                                                                     Convert.ToDateTime(value.EventDate).Day));
+                NewBranch.BranchCode = value.BranchCode;
+                NewBranch.Branch = value.Branch;
+                NewBranch.CompanyId = value.CompanyId;
 
+                xy.MstBranches.InsertOnSubmit(NewBranch);
+                xy.SubmitChanges();
 
-                NewEvent.EventDate = EventDate.Value;
-                NewEvent.EventDescription = value.EventDescription;
-                NewEvent.Particulars = value.Particulars;
-                NewEvent.URL = value.URL;
-                NewEvent.VideoURL = value.VideoURL;
-                NewEvent.EventType = value.EventType;
-                NewEvent.IsRestricted = value.IsRestricted;
-                NewEvent.IsArchived = value.IsArchived;
-
-                db.MstEvents.InsertOnSubmit(NewEvent);
-                db.SubmitChanges();
-
-                return NewEvent.Id;
+                return NewBranch.Id;
             }
             catch
             {
                 return 0;
+            }
+        }
+
+        // PUT /api/UpdateEvent/5
+        [Authorize]
+        [Route("api/UpdateEvent/{Id}")]
+        public HttpResponseMessage Put(String Id, Models.Branches value)
+        {
+            Id = Id.Replace(",", "");
+            int id = Convert.ToInt32(Id);
+
+            try
+            {
+                var Leaves = from x in xy.MstBranches where x.Id == id select x;
+
+                if (Leaves.Any())
+                {
+                    var UpdateBranch = Leaves.FirstOrDefault();
+
+                    UpdateBranch.BranchCode = value.BranchCode;
+                    UpdateBranch.Branch = value.Branch;
+                    UpdateBranch.CompanyId = value.CompanyId;
+
+                    xy.SubmitChanges();
+
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
+                }
+            }
+            catch (NullReferenceException)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+        }
+
+        // DELETE api/DeleteEvent/5
+        [Authorize]
+        [Route("api/DeleteEvent/{Id}")]
+        public HttpResponseMessage Delete(int Id)
+        {
+            Data.MstBranch DeleteEvent = xy.MstBranches.Where(x => x.Id == Id).First();
+
+            if (DeleteEvent != null)
+            {
+                xy.MstBranches.DeleteOnSubmit(DeleteEvent);
+                try
+                {
+                    xy.SubmitChanges();
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+                catch
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest);
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.NotFound);
             }
         }
 
