@@ -22,5 +22,12 @@ namespace POSConsolidator.Controllers
             return View();
         }
 
+        // GET: /POS/Branch
+        [Authorize]
+        public ActionResult Branch()
+        {
+            return View();
+        }
+
 	}
 }
